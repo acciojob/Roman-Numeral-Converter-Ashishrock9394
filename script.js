@@ -8,30 +8,32 @@ function convertToRoman(num) {
       5:['V', 5], 
       6:['I', 1]
     };
-	let result = 0;
-    let prevValue = 0;
 
-    for (let i = s.length - 1; i >= 0; i--) {
-        const currentRoman = s[i];
-        const currentVal = romanToIntMap[currentRoman];
+  //your code here
+	let result = "";
 
-        if (currentVal < prevValue) {
-            result -= currentVal;
-        } else {
-            result += currentVal;
-        }
+  for (let key in obj) {
+    const [symbol, value] = obj[key];
+    const count = Math.floor(num / value);
 
-        prevValue = currentVal;
+    if (count >= 1) {
+      result += symbol.repeat(count);
+      num -= value * count;
     }
 
-    return result;
-  //your code here
+    // Handle cases like 4, 40, 9, etc. (using subtraction notation)
+    if (key % 2 === 0 && num >= obj[key + 2][1] - value) {
+      result += obj[key + 2][0] + symbol;
+      num -= obj[key + 2][1] - value;
+    }
+  }
 
+  return result;
 }
+
+// console.log(convertToRoman(36));
+
 // You can test your code by running the above function and printing it to console by pressing the run button at the top. To run it with input 36, uncomment the following line
-const romanNumeral = "MCMXCIV"; // Example Roman numeral
-const intValue = convertToRoman(romanNumeral);
-console.log(intValue);
 
 // console.log(convertToRoman(36));
 
